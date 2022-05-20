@@ -19,8 +19,8 @@
                    HorizontalOptions="Center">
                 <Image Source="{Binding ContactImgSource}"
                        x:Name="contactImage"
-                       WidthRequest="66"
-                       HeightRequest="66"
+                       WidthRequest="100"
+                       HeightRequest="100"
                        HorizontalOptions="EndAndExpand"
                        Aspect="AspectFit"
                        Rotation="-90">
@@ -29,48 +29,59 @@
 
 
             <Label Text="Full Name"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding FullName, Mode=TwoWay}"
                    FontSize="Medium" />
 
             <Label Text="Phone Number"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding PhoneNumbers, Mode=TwoWay}"
                    FontSize="Medium" />
 
             <Label Text="Email Address"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding Emails, Mode=TwoWay}"
                    FontSize="Medium" />
 
             <Label Text="Address"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding Address, Mode=TwoWay}"
                    FontSize="Medium" />
 
             <Label Text="Date of Birth"
                    FontSize="Small" />
             <Label Text="{Binding DoB_String}"
-                   FontSize="Medium" />
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
 
             <Label Text="Description"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding Description, Mode=TwoWay}"
                    FontSize="Medium"
                    Margin="0" />
+            
+            
 
             <Label Text="Last Contacted"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding LastContacted_String}"
                    FontSize="Medium" />
 
             <Label Text="Created"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding CreatedDate_String}"
                    FontSize="Medium" />
 
             <Label Text="Last Edited"
-                   FontSize="Small" />
+                   FontSize="Small"
+                   Margin="0, 20, 0, 0" />
             <Label Text="{Binding LastEdited_String}"
                    FontSize="Medium" />
 
