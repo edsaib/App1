@@ -79,7 +79,7 @@
                         <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
                                                     IsValid="{Binding PhoneNumberIsValid, Mode=TwoWay}"
                                                     MinimumLength="8"
-                                                    MaximumLength="16"/>
+                                                    MaximumLength="18"/>
                 </Entry.Behaviors>
             </Entry>
             <Label Text="Phone Number not valid (required)"
