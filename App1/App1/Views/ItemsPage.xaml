@@ -1,42 +1,101 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App1.Views.ItemsPage"
+             x:Class="App1.Views.ContactsPage"
              Title="{Binding Title}"
-             xmlns:local="clr-namespace:App1.ViewModels"  
-             xmlns:model="clr-namespace:App1.Models"  
-             x:Name="BrowseItemsPage">
+             xmlns:local="clr-namespace:App1.ViewModels"
+             xmlns:model="clr-namespace:App1.Models"
+             x:DataType="local:ContactsViewModel"
+             x:Name="BrowseContactsPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Add"
+                     Command="{Binding AddContactCommand}" />
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ItemsListView"
-                ItemsSource="{Binding Items}"
-                SelectionMode="None">
+    <RefreshView x:DataType="local:ContactsViewModel"
+                 Command="{Binding LoadContactsCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ContactsListView"
+                        ItemsSource="{Binding Contacts}"
+                        SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
+                <DataTemplate x:DataType="model:Contact">
+                    
+                        <Grid Padding="10">
+
+                            <Frame CornerRadius="5"
+                                   Padding="10"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   HasShadow="True">
+                                
+                                <StackLayout Orientation="Horizontal">
+                                <Frame CornerRadius="90">
+                                    <Image Source="{Binding ContactImageSource_String}"
+                                           WidthRequest="66"
+                                           HeightRequest="66" 
+                                           Rotation="-90"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="EndAndExpand"/>
+                                </Frame>
+                                <StackLayout VerticalOptions="Center" Padding="10" HorizontalOptions="FillAndExpand">
+                                        
+                                        <StackLayout VerticalOptions="Center"
+                                                     Padding="5">
+                                            
+                                            <Label Text="{Binding FullName}"
+                                                LineBreakMode="NoWrap"
+                                                Style="{DynamicResource ListItemTextStyle}"
+                                                FontSize="16" />
+                                            
+                                        </StackLayout>
+
+
+                                        <StackLayout Orientation="Horizontal" Padding="10">
+                                            <ImageButton WidthRequest="30"
+                                                         BackgroundColor="White"
+                                                         HorizontalOptions="FillAndExpand"
+                                                         HeightRequest="30"
+                                                         Source="call_button.png"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:ContactsViewModel}}, Path=CallTapped}"
+                                                         CommandParameter="{Binding .}" />
+                                            <ImageButton WidthRequest="30"
+                                                         BackgroundColor="White"
+                                                         HorizontalOptions="FillAndExpand"
+                                                         HeightRequest="30"
+                                                         Source="mail_button.png"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:ContactsViewModel}}, Path=MailTapped}"
+                                                         CommandParameter="{Binding .}" />
+                                            <ImageButton WidthRequest="30"
+                                                         BackgroundColor="White"
+                                                         HorizontalOptions="FillAndExpand"
+                                                         HeightRequest="30"
+                                                         Source="sms_button.png"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:ContactsViewModel}}, Path=SMSTapped}"
+                                                         CommandParameter="{Binding .}" />
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer  
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ContactsViewModel}}, Path=ItemTapped}"		
+                                        CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </StackLayout.GestureRecognizers>
+
+                                </StackLayout>
+                            </Frame>
+
+
+                        </Grid>
+                    
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

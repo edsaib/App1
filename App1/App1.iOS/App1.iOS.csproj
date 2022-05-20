@@ -132,7 +132,13 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.8.116</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.CommunityToolkit">
+      <Version>2.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -141,5 +147,17 @@
       <Project>{91D86008-664A-4CE3-B135-F06BCB006928}</Project>
       <Name>App1</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\call_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\mail_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\take_photo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\sms_button.png" />
   </ItemGroup>
 </Project>

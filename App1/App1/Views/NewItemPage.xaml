@@ -1,22 +1,156 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="App1.Views.NewItemPage"
              Shell.PresentationMode="ModalAnimated"
-             Title="New Item"
+             Title="New Contact"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="InvalidStyle"
+                   TargetType="Entry">
+                <Setter Property="TextColor"
+                        Value="Red" />
+            </Style>
+            <xct:InvertedBoolConverter x:Key="invertBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
     <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <StackLayout Orientation="Horizontal">
+        <ScrollView>
+            <StackLayout Spacing="3" Padding="15">
+
+                <Frame CornerRadius="90"
+                       HorizontalOptions="Center">
+                    <Image Source="{Binding ContactImgSource}"
+                           x:Name="contactImage"
+                           WidthRequest="150"
+                           HeightRequest="150"
+                           VerticalOptions="End"
+                           HorizontalOptions="Center"
+                           Rotation="90" />
+                </Frame>
+
+
+
+                <StackLayout Padding="10" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Button Text="Choose Image"
+                        Command="{Binding ButtonChoose}"
+                        HorizontalOptions="FillAndExpand" />
+                <Button Text="Capture Image"
+                        Command="{Binding ButtonCapture}"
+                        HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+
+
+            <Label Text="Full Name *"
+                   FontAttributes="bold"
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
+            <Entry Text="{Binding FullName, Mode=TwoWay}"
+                   FontSize="Medium">
+                <Entry.Behaviors>
+                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                                                IsValid="{Binding FullNameIsValid, Mode=TwoWay}"
+                                                MinimumLength="1"
+                                                MaximumLength="50" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Full Name not valid (required)"
+                   FontSize="Small"
+                   IsVisible="{Binding FullNameIsValid,
+                Converter={StaticResource invertBoolConverter}}"
+                   TextColor="Red" />
+
+
+            <Label Text="Phone Number *"
+                   FontAttributes="bold"
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
+                <Entry Text="{Binding PhoneNumbers, Mode=TwoWay}"
+                       FontSize="Medium"
+                       MaxLength="10"
+                       Keyboard="Telephone">
+                <Entry.Behaviors>
+                        <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                                                    IsValid="{Binding PhoneNumberIsValid, Mode=TwoWay}"
+                                                    MinimumLength="8"
+                                                    MaximumLength="16"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Phone Number not valid (required)"
+                   FontSize="Small"
+                   IsVisible="{Binding PhoneNumberIsValid,
+                Converter={StaticResource invertBoolConverter}}"
+                   TextColor="Red" />
+
+
+            <Label Text="Email Address"
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
+            <Entry Text="{Binding Emails, Mode=TwoWay}"
+                   FontSize="Medium"
+                   MaxLength="100"
+                   Keyboard="Email">
+                <Entry.Behaviors>
+                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                                                IsValid="{Binding EmailIsValid, Mode=TwoWay}"
+                                                xct:MultiValidationBehavior.Error="Email is not valid." 
+                                                MaximumLength="100" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Email not valid" FontSize="Small" 
+                   IsVisible="{Binding EmailIsValid,
+                Converter={StaticResource invertBoolConverter}}" 
+                   TextColor="Red"/>
+
+
+            <Label Text="Address"
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
+            <Entry Text="{Binding Address, Mode=TwoWay}" FontSize="Medium">
+                <Entry.Behaviors>
+                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                                                IsValid="{Binding AddressIsValid, Mode=TwoWay}"
+                                                MinimumLength="0"
+                                                MaximumLength="50" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Address not valid"
+                   FontSize="Small"
+                   IsVisible="{Binding AddressIsValid,
+                Converter={StaticResource invertBoolConverter}}"
+                   TextColor="Red" />
+
+            
+            <Label Text="Date of Birth"
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
+            <DatePicker Date="{Binding DoB}"
+                        Format="MMMM dd, yyyy"
+                        MinimumDate="{Binding PropertyMinimumDate}"
+                        MaximumDate="{Binding PropertyMaximumDate}"/>
+
+
+            <Label Text="Description"
+                   FontSize="Medium"
+                   Margin="0, 20, 0, 0" />
+            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" MaxLength="500" />
+
+
+            <StackLayout Orientation="Horizontal"
+                         Margin="0, 20, 0, 0">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
+            
         </StackLayout>
+    </ScrollView>
     </ContentPage.Content>
-    
+
+
 </ContentPage>

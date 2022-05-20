@@ -6,10 +6,10 @@ namespace App1.Services
 {
     public interface IDataStore<T>
     {
-        Task<bool> AddItemAsync(T item);
-        Task<bool> UpdateItemAsync(T item);
-        Task<bool> DeleteItemAsync(string id);
-        Task<T> GetItemAsync(string id);
-        Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<int> AddContactAsync(T contact);
+        Task<int> UpdateContactAsync(T contact);
+        Task<int> DeleteContactAsync(int id);
+        Task<T> GetContactAsync(int id);
+        Task<List<T>> GetContactsAsync(bool forceRefresh = false);
     }
 }

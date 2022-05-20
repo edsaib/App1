@@ -11,5 +11,6 @@ namespace App1.Views
             InitializeComponent();
             BindingContext = new ItemDetailViewModel();
         }
+
     }
 }
