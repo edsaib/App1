@@ -1,9 +1,7 @@
 ﻿using App1.Models;
 using App1.Views;
-using App1.ViewModels;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace App1.ViewModels
@@ -93,7 +91,8 @@ namespace App1.ViewModels
                 if (value == DateTime.MinValue)
                 {
                     LastEdited_String = "";
-                } else
+                }
+                else
                 {
                     LastEdited_String = value.ToString("yyyy-MM-dd, HH':'mm");
                 }

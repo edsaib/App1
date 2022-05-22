@@ -1,9 +1,5 @@
 ﻿using App1.Services;
-using App1.Views;
-using System;
-using System.IO;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace App1
 {
@@ -17,7 +13,7 @@ namespace App1
             get
             {
                 // Singleton: If the connection is already open, don't reopen it.
-                if(_contactDatabase == null)
+                if (_contactDatabase == null)
                 {
                     _contactDatabase = new ContactDatabase(Constants.DatabasePath, Constants.Flags);
                 }

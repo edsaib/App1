@@ -25,14 +25,13 @@
             <StackLayout Spacing="3" Padding="15">
 
                 <Frame CornerRadius="90"
-                       HorizontalOptions="Center">
+                       Padding="0"
+                       HorizontalOptions="CenterAndExpand"
+                       WidthRequest="150"
+                       HeightRequest="150">
                     <Image Source="{Binding ContactImgSource}"
                            x:Name="contactImage"
-                           WidthRequest="150"
-                           HeightRequest="150"
-                           VerticalOptions="End"
-                           HorizontalOptions="Center"
-                           Rotation="90" />
+                           Aspect="AspectFill"/>
                 </Frame>
 
 
@@ -73,13 +72,13 @@
                    Margin="0, 20, 0, 0" />
                 <Entry Text="{Binding PhoneNumbers, Mode=TwoWay}"
                        FontSize="Medium"
-                       MaxLength="10"
+                       MaxLength="14"
                        Keyboard="Telephone">
                 <Entry.Behaviors>
                         <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
                                                     IsValid="{Binding PhoneNumberIsValid, Mode=TwoWay}"
                                                     MinimumLength="8"
-                                                    MaximumLength="18"/>
+                                                    MaximumLength="14"/>
                 </Entry.Behaviors>
             </Entry>
             <Label Text="Phone Number not valid (required)"
@@ -97,10 +96,9 @@
                    MaxLength="100"
                    Keyboard="Email">
                 <Entry.Behaviors>
-                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
-                                                IsValid="{Binding EmailIsValid, Mode=TwoWay}"
-                                                xct:MultiValidationBehavior.Error="Email is not valid." 
-                                                MaximumLength="100" />
+                    <xct:EmailValidationBehavior Flags="ValidateOnUnfocusing"
+                                                 IsValid="{Binding EmailIsValid, Mode=TwoWay}" 
+                                                 MaximumLength="100"/>
                 </Entry.Behaviors>
             </Entry>
             <Label Text="Email not valid" FontSize="Small" 

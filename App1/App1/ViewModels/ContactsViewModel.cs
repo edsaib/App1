@@ -1,5 +1,4 @@
-﻿using App1.Models;
-using App1.Views;
+﻿using App1.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -92,9 +91,13 @@ namespace App1.ViewModels
             await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ContactId)}={contact.Id}");
         }
 
-        void OnCallContactSelected(Models.Contact contact)
+        async void OnCallContactSelected(Models.Contact contact)
         {
-            if (contact.PhoneNumbers == null) return;
+            if (contact.PhoneNumbers == null)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", "Please specify a Phone Number", "OK");
+                return;
+            };
             try
             {
                 PhoneDialer.Open(contact.PhoneNumbers);
@@ -118,7 +121,11 @@ namespace App1.ViewModels
 
         async void OnMailContactSelected(Models.Contact contact)
         {
-            if (contact.Emails == null) return;
+            if (contact.Emails == null)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", "Please specify an Email Address", "OK");
+                return;
+            };
             try
             {
                 var message = new EmailMessage
@@ -145,6 +152,11 @@ namespace App1.ViewModels
 
         async void OnSMSContactSelected(Models.Contact contact)
         {
+            if (contact.PhoneNumbers == null)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", "Please specify a Phone Number", "OK");
+                return;
+            };
             try
             {
                 var message = new SmsMessage("", contact.PhoneNumbers);

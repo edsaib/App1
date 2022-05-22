@@ -34,13 +34,13 @@
                                    HasShadow="True">
                                 
                                 <StackLayout Orientation="Horizontal">
-                                <Frame CornerRadius="90">
+                                <Frame CornerRadius="90"
+                                       Padding="0"
+                                       HorizontalOptions="CenterAndExpand"
+                                       WidthRequest="66"
+                                       HeightRequest="66">
                                     <Image Source="{Binding ContactImageSource_String}"
-                                           WidthRequest="66"
-                                           HeightRequest="66" 
-                                           Rotation="-90"
-                                           Aspect="AspectFit"
-                                           HorizontalOptions="EndAndExpand"/>
+                                           Aspect="AspectFill"/>
                                 </Frame>
                                 <StackLayout VerticalOptions="Center" Padding="10" HorizontalOptions="FillAndExpand">
                                         

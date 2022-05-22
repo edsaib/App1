@@ -1,10 +1,8 @@
-﻿using App1.Models;
-using App1.Services;
+﻿using App1.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
 
 namespace App1.ViewModels
 {

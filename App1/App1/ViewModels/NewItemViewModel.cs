@@ -1,11 +1,7 @@
-﻿using App1.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -75,6 +71,7 @@ namespace App1.ViewModels
         public bool EmailIsValid
         {
             get => emailIsValid;
+
             set
             {
                 emailIsValid = value;
@@ -218,6 +215,9 @@ namespace App1.ViewModels
                 ContactImgSource_String = contact.ContactImageSource_String;
                 ContactImgSource = ImageSource.FromFile(ContactImgSource_String);
 
+                PhoneNumberIsValid = true;
+                FullNameIsValid = true;
+
                 Debug.WriteLine("Contact successfully loaded");
 
             }
@@ -231,9 +231,9 @@ namespace App1.ViewModels
 
         private byte[] ImageSourceToByteArray(ImageSource source)
         {
-            StreamImageSource streamImageSource = (StreamImageSource)source; 
-            System.Threading.CancellationToken cancellationToken = System.Threading.CancellationToken.None; 
-            Task<Stream> task = streamImageSource.Stream(cancellationToken); 
+            StreamImageSource streamImageSource = (StreamImageSource)source;
+            System.Threading.CancellationToken cancellationToken = System.Threading.CancellationToken.None;
+            Task<Stream> task = streamImageSource.Stream(cancellationToken);
             Stream stream = task.Result;
 
             byte[] b;
@@ -264,10 +264,10 @@ namespace App1.ViewModels
             }
             ContactImgSource_String = newFile;
         }
-    
 
 
-    async private void ButtonChoose_Clicked()
+
+        async private void ButtonChoose_Clicked()
         {
             var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
             {
@@ -353,11 +353,12 @@ namespace App1.ViewModels
 
             };
 
-            if(contactId != -1)
+            if (contactId != -1)
             {
                 newContact.Id = contactId;
                 await _ContactDatabase.UpdateContactAsync(newContact);
-            } else
+            }
+            else
             {
                 await _ContactDatabase.AddContactAsync(newContact);
             }

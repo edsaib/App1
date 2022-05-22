@@ -16,15 +16,13 @@
                      Padding="15">
 
             <Frame CornerRadius="90"
-                   HorizontalOptions="Center">
+                   HorizontalOptions="CenterAndExpand"
+                   Padding="0"
+                   WidthRequest="150"
+                   HeightRequest="150">
                 <Image Source="{Binding ContactImgSource}"
                        x:Name="contactImage"
-                       WidthRequest="100"
-                       HeightRequest="100"
-                       HorizontalOptions="EndAndExpand"
-                       Aspect="AspectFit"
-                       Rotation="-90">
-                </Image>
+                       Aspect="AspectFill" />
             </Frame>
 
 

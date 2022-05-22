@@ -11,7 +11,7 @@
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Color x:Key="Accent">#f08c00</Color>
+            <Color x:Key="Accent">#424242</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
 
