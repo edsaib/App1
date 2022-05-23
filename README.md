@@ -27,4 +27,6 @@ Simply clone this project into Microsoft Visual Studio (2019 is the version I us
 - Contacts (Adding/Editing/Actions)
   - Add Option to open navigator to destination address
   - Improve validation of Address & Phone Number 
+  - Implement search bar
+  - Implement filtering
 
