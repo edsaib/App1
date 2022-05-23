@@ -7,8 +7,8 @@
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit" Command="{Binding EditContactCommand}"/>
-        <ToolbarItem Text="Remove" Command="{Binding RemoveContactCommand}"/>
+        <ToolbarItem Text="Edit" Command="{Binding EditContactCommand}" IconImageSource="icon_edit_48.png"/>
+        <ToolbarItem Text="Remove" Command="{Binding RemoveContactCommand}" IconImageSource="icon_remove_50.png"/>
     </ContentPage.ToolbarItems>
 
     <ScrollView>

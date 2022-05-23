@@ -45,6 +45,7 @@ namespace App1.ViewModels
             CreatedDate = DateTime.Now;
             LastEdited = DateTime.Now;
             LastContacted = DateTime.MinValue;
+            ContactImgSource_String = "take_photo.png";
 
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);

@@ -10,6 +10,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add"
+                     IconImageSource="icon_add_50.png"
                      Command="{Binding AddContactCommand}" />
     </ContentPage.ToolbarItems>
     <!--

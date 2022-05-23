@@ -53,7 +53,7 @@
             <Entry Text="{Binding FullName, Mode=TwoWay}"
                    FontSize="Medium">
                 <Entry.Behaviors>
-                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                        <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
                                                 IsValid="{Binding FullNameIsValid, Mode=TwoWay}"
                                                 MinimumLength="1"
                                                 MaximumLength="50" />
@@ -75,7 +75,7 @@
                        MaxLength="14"
                        Keyboard="Telephone">
                 <Entry.Behaviors>
-                        <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                        <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
                                                     IsValid="{Binding PhoneNumberIsValid, Mode=TwoWay}"
                                                     MinimumLength="8"
                                                     MaximumLength="14"/>
@@ -96,7 +96,7 @@
                    MaxLength="100"
                    Keyboard="Email">
                 <Entry.Behaviors>
-                    <xct:EmailValidationBehavior Flags="ValidateOnUnfocusing"
+                        <xct:EmailValidationBehavior Flags="ValidateOnValueChanging"
                                                  IsValid="{Binding EmailIsValid, Mode=TwoWay}" 
                                                  MaximumLength="100"/>
                 </Entry.Behaviors>
@@ -112,7 +112,7 @@
                    Margin="0, 20, 0, 0" />
             <Entry Text="{Binding Address, Mode=TwoWay}" FontSize="Medium">
                 <Entry.Behaviors>
-                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing"
+                    <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
                                                 IsValid="{Binding AddressIsValid, Mode=TwoWay}"
                                                 MinimumLength="0"
                                                 MaximumLength="50" />

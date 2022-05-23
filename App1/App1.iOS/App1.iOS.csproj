@@ -160,4 +160,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\sms_button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_add_50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_remove_50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon_edit_48.png" />
+  </ItemGroup>
 </Project>

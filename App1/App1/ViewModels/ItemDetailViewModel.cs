@@ -210,8 +210,16 @@ namespace App1.ViewModels
 
         async void RemoveContact(object obj)
         {
-            await _ContactDatabase.DeleteContactAsync(Id);
-            await Shell.Current.GoToAsync("..");
+            var resp = await App.Current.MainPage.DisplayAlert("Remove Contact", "Are you sure?", "Remove", "Cancel");
+
+            if(resp == true)
+            {
+                await _ContactDatabase.DeleteContactAsync(Id);
+                await Shell.Current.GoToAsync("..");
+            } else
+            {
+                return;
+            }
         }
 
     }
