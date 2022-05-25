@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace App1.Services
 {
-    public class ContactDatabase : IDataStore<Contact>
+    public class ContactDatabase //: IDataStore<Contact>
     {
 
         private readonly SQLiteAsyncConnection _connection;

@@ -5,7 +5,8 @@
              x:Class="App1.Views.NewItemPage"
              Shell.PresentationMode="ModalAnimated"
              Title="New Contact"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:viewmodels="clr-namespace:App1.ViewModels" x:DataType="viewmodels:NewContactViewModel"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.Resources>

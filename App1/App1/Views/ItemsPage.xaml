@@ -20,7 +20,9 @@
     <RefreshView x:DataType="local:ContactsViewModel"
                  Command="{Binding LoadContactsCommand}"
                  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ContactsListView"
+        <Grid x:Name="MainGrid">
+            <!--<SearchBar x:Name="filterContacts" Placeholder="Search Contacts..." SearchCommand="{Binding PerformSearch}"/>-->
+            <CollectionView x:Name="ContactsListView"
                         ItemsSource="{Binding Contacts}"
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
@@ -100,5 +102,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        </Grid>
     </RefreshView>
 </ContentPage>
