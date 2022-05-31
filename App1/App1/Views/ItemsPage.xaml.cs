@@ -10,8 +10,8 @@ namespace App1.Views
         public ContactsPage()
         {
             InitializeComponent();
-
-            BindingContext = _viewModel = new ContactsViewModel();
+            // Pass Navigation property to ViewModel context of this page
+            BindingContext = _viewModel = new ContactsViewModel(Navigation);
         }
 
         protected override void OnAppearing()

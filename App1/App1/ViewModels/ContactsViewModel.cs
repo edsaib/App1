@@ -1,8 +1,11 @@
-﻿using App1.Views;
+﻿using App1.Services;
+using App1.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -12,6 +15,9 @@ namespace App1.ViewModels
     public class ContactsViewModel : BaseViewModel
     {
         // -- Attributes
+
+        private HttpClient client;
+
 
         // -- Commands
 
@@ -44,6 +50,10 @@ namespace App1.ViewModels
         /// </summary>
         public Command<Models.Contact> SMSTapped { get; }
         /// <summary>
+        /// Command to open the mobile Maps app to show the address location of the corresponding Contact
+        /// </summary>
+        public Command<Models.Contact> MapsTapped { get; }
+        /// <summary>
         /// TODO: Command to search specific Contacts from the Observable Collection of Contacts
         /// </summary>
         public Command<string> SearchContacts { get; }
@@ -54,10 +64,12 @@ namespace App1.ViewModels
         /// Constructor of ViewModel for viewing all persisted Contacts.
         /// Initializes Attributes and specifies Commands.
         /// </summary>
-        public ContactsViewModel()
+        public ContactsViewModel(INavigation navigation)
         {
             // Initialize attributes
             Title = "Browse Contacts";
+            client = new HttpClient();
+            this.Navigation = navigation;
 
             // Specify commands
             Contacts = new ObservableCollection<Models.Contact>();
@@ -72,10 +84,20 @@ namespace App1.ViewModels
 
             SMSTapped = new Command<Models.Contact>(OnSMSContactSelected);
 
+            MapsTapped = new Command<Models.Contact>(OnMapSelected);
+
             //SearchContacts = new Command<string>(PerformSearch);
 
             AddContactCommand = new Command(OnAddContact);
         }
+
+        // -- Attribute Getter/Setter
+
+        /// <summary>
+        /// Navigation property in order to push/pop pages onto/from the Navigation stack.
+        /// This property is passed by the Page (ItemsPage) this ViewModel is bound to.
+        /// </summary>
+        public INavigation Navigation { get; set; }
 
         // -- Specific Functions
 
@@ -136,6 +158,10 @@ namespace App1.ViewModels
             await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ContactId)}={contact.Id}");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contact"></param>
         private async void OnCallContactSelected(Models.Contact contact)
         {
             if (contact.PhoneNumbers == null)
@@ -225,33 +251,125 @@ namespace App1.ViewModels
                 Debug.WriteLine(ex.Message);
             }
         }
+        
+        public async Task<Models.NominatimGeoJson> GetAddressDataAsync(string string_uri)
+        {
+            
+            Uri uri = new Uri(string.Format(string_uri, string.Empty));
+            
+            HttpResponseMessage response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var resultGeoJson = JsonConvert.DeserializeObject<Models.NominatimGeoJson>(content);
+                return resultGeoJson;
+            }
+
+            return null;
+         
+        }
+        
 
         private async void OnMapSelected(Models.Contact contact)
         {
 
-            // Load contact addresses and check whether they are valid or not
-            // Idea for validation: specify "valid" attribute for any given address entry
-            if (contact.Address == null)
-            {
-                await App.Current.MainPage.DisplayAlert("Alert", "Please specify a valid Address for this Contact", "OK");
-                return;
-            };
+            // API call to get coordinates from specific address
 
-            // Open map with all (valid) addresses with all the requirements from the ticket
-            try
+            string city = "";
+            string country = "";
+            string street = "";
+            string postalCode = "";
+            if (!String.IsNullOrEmpty(contact.City))
             {
-                var message = new SmsMessage("", contact.PhoneNumbers);
-                await Sms.ComposeAsync(message);
+                city = contact.City;
             }
-            catch (FeatureNotSupportedException ex)
+
+            if(!String.IsNullOrEmpty(contact.Country))
             {
-                // Sms is not supported on this device.
-                Debug.WriteLine(ex.Message);
+                country = contact.Country;
             }
-            catch (Exception ex)
+
+            if(String.IsNullOrEmpty(contact.Street))
             {
-                // Other error has occurred.
-                Debug.WriteLine(ex.Message);
+                street = contact.Street;
+            }
+
+            if(!String.IsNullOrEmpty(contact.PostalCode))
+            {
+                postalCode = contact.PostalCode;
+            }
+
+            string gui_uri = "https://nominatim.openstreetmap.org/search?";
+            gui_uri += "city=" + city + "&";
+            gui_uri += "postalcode=" + postalCode + "&";
+            gui_uri += "street=" + street + "&";
+            gui_uri += "country=" + country + "&";
+            string uri = gui_uri +  "format=geojson";
+
+            // NullReferenceException!!!! check whether attributes are null or not.
+            string searchQ = contact.Country + "+"
+                + contact.PostalCode + "+"
+                + contact.City + "+"
+                + contact.Street.Replace(' ', '+');
+
+
+            var result = await GetAddressDataAsync(uri);
+
+            if(result == null)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert", "There is no valid address for this Contact!", "OK");
+                return;
+            } else
+            {
+                Debug.WriteLine(result);
+
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    // https://developer.apple.com/library/ios/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
+                    //await Launcher.OpenAsync("http://maps.apple.com/?q="+searchQ);
+
+                    List<MapDetails> details = new List<MapDetails>
+                    {
+                        new MapDetails
+                        {
+                            PinName = "Name",
+                            PinAddress = contact.Street,
+                            PinLabel = contact.FullName,
+                            Position = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0])
+                        }
+                    };
+
+                    var mapPage = new MapPage(details);
+
+                    await Navigation.PushAsync(mapPage);
+
+                }
+                else if (Device.RuntimePlatform == Device.Android)
+                {
+                    // open the maps app directly
+                    //await Launcher.OpenAsync("geo:0,0?q="+searchQ);
+                    //await Shell.Current.GoToAsync($"{nameof(MapPage)}");
+
+                    List<MapDetails> details = new List<MapDetails>
+                    {
+                        new MapDetails
+                        {
+                            PinName = "Name",
+                            PinAddress = contact.Street,
+                            PinLabel = contact.FullName,
+                            Position = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0])
+                        
+                        }
+                    };
+
+                    var mapPage = new MapPage(details);
+
+                    await Navigation.PushAsync(mapPage);
+                }
+                else if (Device.RuntimePlatform == Device.UWP)
+                {
+                    await Launcher.OpenAsync("bingmaps:?where="+searchQ);
+                }
             }
         }
     }

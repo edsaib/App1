@@ -80,6 +80,13 @@
                                                          Source="sms_button.png"
                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type local:ContactsViewModel}}, Path=SMSTapped}"
                                                          CommandParameter="{Binding .}" />
+                                            <ImageButton WidthRequest="30"
+                                                         BackgroundColor="White"
+                                                         HorizontalOptions="FillAndExpand"
+                                                         HeightRequest="30"
+                                                         Source="icon_maps.png"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:ContactsViewModel}}, Path=MapsTapped}"
+                                                         CommandParameter="{Binding .}" />
                                         </StackLayout>
 
                                     </StackLayout>

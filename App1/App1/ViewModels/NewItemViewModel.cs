@@ -15,7 +15,10 @@ namespace App1.ViewModels
         //private bool isValid;
         private bool fullNameIsValid;
         private bool emailIsValid;
-        private bool addressIsValid;
+        private bool streetIsValid;
+        private bool cityIsValid;
+        private bool countryIsValid;
+        private bool postalCodeIsValid;
         private bool phoneNumberIsValid;
 
         private int contactId;
@@ -24,7 +27,10 @@ namespace App1.ViewModels
         private DateTime dob;
         private string phoneNumbers;
         private string emails;
-        private string address;
+        private string street;
+        private string city;
+        private string country;
+        private string postalCode;
         private ImageSource contactImageSource;
         private string contactImageSource_string;
         private DateTime lastContacted;
@@ -97,14 +103,56 @@ namespace App1.ViewModels
         }
 
         /// <summary>
-        /// Get/Set addressIsValid bool attribute for validation of address Entry component
+        /// Get/Set streetIsValid bool attribute for validation of street Entry component
         /// </summary>
-        public bool AddressIsValid
+        public bool StreetIsValid
         {
-            get => addressIsValid;
+            get => streetIsValid;
             set
             {
-                addressIsValid= value;
+                streetIsValid= value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Get/Set countryIsValid bool attribute for validation of country Entry component
+        /// </summary>
+        public bool CountryIsValid
+        {
+            get => countryIsValid;
+            set
+            {
+                countryIsValid= value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Get/Set cityIsValid bool attribute for validation of city Entry component
+        /// </summary>
+        public bool CityIsValid
+        {
+            get => cityIsValid;
+            set
+            {
+                cityIsValid= value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Get/Set postalCodeIsValid bool attribute for validation of postalCode Entry component
+        /// </summary>
+        public bool PostalCodeIsValid
+        {
+            get => postalCodeIsValid;
+            set
+            {
+                postalCodeIsValid= value;
 
                 OnPropertyChanged();
             }
@@ -148,12 +196,39 @@ namespace App1.ViewModels
         }
 
         /// <summary>
-        /// Get/Set address string attribute for Contact
+        /// Get/Set street string attribute for Contact
         /// </summary>
-        public string Address
+        public string Street
         {
-            get => address;
-            set => SetProperty(ref address, value);
+            get => street;
+            set => SetProperty(ref street, value);
+        }
+
+        /// <summary>
+        /// Get/Set country string attribute for Contact
+        /// </summary>
+        public string Country
+        {
+            get => country;
+            set => SetProperty(ref country, value);
+        }
+
+        /// <summary>
+        /// Get/Set city string attribute for Contact
+        /// </summary>
+        public string City
+        {
+            get => city;
+            set => SetProperty(ref city, value);
+        }
+
+        /// <summary>
+        /// Get/Set postalCode string attribute for Contact
+        /// </summary>
+        public string PostalCode
+        {
+            get => postalCode;
+            set => SetProperty(ref postalCode, value);
         }
 
         /// <summary>
@@ -297,7 +372,10 @@ namespace App1.ViewModels
 
                 FullName = contact.FullName;
                 Emails = contact.Emails;
-                Address = contact.Address;
+                Street = contact.Street;
+                City = contact.City;
+                Country = contact.Country;
+                PostalCode = contact.PostalCode;
                 PhoneNumbers = contact.PhoneNumbers;
                 DoB = contact.DoB;
                 CreatedDate = contact.CreatedDate;
@@ -439,7 +517,10 @@ namespace App1.ViewModels
                 PhoneNumbers = PhoneNumbers,
                 Emails = Emails,
                 Description = Description,
-                Address = Address,
+                Street = Street,
+                City = City,
+                PostalCode = PostalCode,
+                Country = Country,
                 DoB = DoB,
                 ContactImageSource_String = ContactImgSource_String,
                 CreatedDate = CreatedDate,

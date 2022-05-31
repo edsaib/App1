@@ -108,25 +108,87 @@
                    TextColor="Red"/>
 
 
-            <Label Text="Address"
+                <Label Text="Country"
+                       FontSize="Medium"
+                       Margin="0, 20, 0, 0" />
+                <Entry Text="{Binding Country, Mode=TwoWay}"
+                       FontSize="Medium">
+                    <Entry.Behaviors>
+                        <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
+                                                    IsValid="{Binding CountryIsValid, Mode=TwoWay}"
+                                                    MinimumLength="0"
+                                                    MaximumLength="20"
+                                                    RegexPattern="[a-zA-Z]"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="Country not valid"
+                       FontSize="Small"
+                       IsVisible="{Binding CountryIsValid,
+                Converter={StaticResource invertBoolConverter}}"
+                       TextColor="Red" />
+
+
+                <Label Text="City"
+                       FontSize="Medium"
+                       Margin="0, 20, 0, 0" />
+                <Entry Text="{Binding City, Mode=TwoWay}"
+                       FontSize="Medium">
+                    <Entry.Behaviors>
+                        <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
+                                                    IsValid="{Binding CityIsValid, Mode=TwoWay}"
+                                                    MinimumLength="0"
+                                                    MaximumLength="20"
+                                                    RegexPattern="[a-zA-Z]"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="City not valid"
+                       FontSize="Small"
+                       IsVisible="{Binding CityIsValid,
+                Converter={StaticResource invertBoolConverter}}"
+                       TextColor="Red" />
+
+
+                <Label Text="Street"
                    FontSize="Medium"
                    Margin="0, 20, 0, 0" />
-            <Entry Text="{Binding Address, Mode=TwoWay}" FontSize="Medium">
+            <Entry Text="{Binding Street, Mode=TwoWay}" FontSize="Medium">
                 <Entry.Behaviors>
                     <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
-                                                IsValid="{Binding AddressIsValid, Mode=TwoWay}"
+                                                IsValid="{Binding StreetIsValid, Mode=TwoWay}"
                                                 MinimumLength="0"
                                                 MaximumLength="50" />
                 </Entry.Behaviors>
             </Entry>
-            <Label Text="Address not valid"
+            <Label Text="Street not valid"
                    FontSize="Small"
-                   IsVisible="{Binding AddressIsValid,
+                   IsVisible="{Binding StreetIsValid,
                 Converter={StaticResource invertBoolConverter}}"
                    TextColor="Red" />
 
-            
-            <Label Text="Date of Birth"
+
+                <Label Text="Postal Code"
+                       FontSize="Medium"
+                       Margin="0, 20, 0, 0" />
+                <Entry Text="{Binding PostalCode, Mode=TwoWay}"
+                       FontSize="Medium"
+                       Keyboard="Numeric">
+                    <Entry.Behaviors>
+                        <xct:TextValidationBehavior Flags="ValidateOnValueChanging"
+                                                    IsValid="{Binding PostalCodeIsValid, Mode=TwoWay}"
+                                                    MinimumLength="5"
+                                                    MaximumLength="5"
+                                                    RegexPattern="\d{5}"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="Postal Code not valid"
+                       FontSize="Small"
+                       IsVisible="{Binding StreetIsValid,
+                Converter={StaticResource invertBoolConverter}}"
+                       TextColor="Red" />
+
+
+
+                <Label Text="Date of Birth"
                    FontSize="Medium"
                    Margin="0, 20, 0, 0" />
             <DatePicker Date="{Binding DoB}"

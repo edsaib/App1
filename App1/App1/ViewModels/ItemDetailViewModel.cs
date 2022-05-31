@@ -17,7 +17,10 @@ namespace App1.ViewModels
         private string description;
         private string phoneNumbers;
         private string emails;
-        private string address;
+        private string country;
+        private string street;
+        private string city;
+        private string postalCode;
         private string contactImageSource_string;
         private ImageSource contactImageSource;
         private DateTime dob;
@@ -75,12 +78,39 @@ namespace App1.ViewModels
         }
 
         /// <summary>
-        /// Get/Set address string atttribute for address Label component
+        /// Get/Set street string atttribute for street Label component
         /// </summary>
-        public string Address
+        public string Street
         {
-            get => address;
-            set => SetProperty(ref address, value);
+            get => street;
+            set => SetProperty(ref street, value);
+        }
+
+        /// <summary>
+        /// Get/Set country string atttribute for country Label component
+        /// </summary>
+        public string Country
+        {
+            get => country;
+            set => SetProperty(ref country, value);
+        }
+
+        /// <summary>
+        /// Get/Set city string atttribute for city Label component
+        /// </summary>
+        public string City
+        {
+            get => city;
+            set => SetProperty(ref city, value);
+        }
+
+        /// <summary>
+        /// Get/Set postalCode string atttribute for postalCode Label component
+        /// </summary>
+        public string PostalCode
+        {
+            get => postalCode;
+            set => SetProperty(ref postalCode, value);
         }
 
         /// <summary>
@@ -255,7 +285,10 @@ namespace App1.ViewModels
                 contactId = contact.Id;
                 FullName = contact.FullName;
                 Emails = contact.Emails;
-                Address = contact.Address;
+                Street = contact.Street;
+                City = contact.City;
+                PostalCode = contact.PostalCode;
+                Country = contact.Country;
                 PhoneNumbers = contact.PhoneNumbers;
                 DoB = contact.DoB;
                 CreatedDate = contact.CreatedDate;
