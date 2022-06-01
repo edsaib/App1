@@ -122,7 +122,14 @@ namespace App1.ViewModels
             set
             {
                 SetProperty(ref dob, value);
-                DoB_String = value.ToString("yyyy-MM-dd");
+                if (value == DateTime.MinValue)
+                {
+                    DoB_String = "";
+                }
+                else
+                {
+                    DoB_String = value.ToString("yyyy-MM-dd");
+                }
             }
         }
 
@@ -134,8 +141,15 @@ namespace App1.ViewModels
             get => createdDate;
             set
             {
-                SetProperty(ref dob, value);
-                CreatedDate_String = value.ToString("yyyy-MM-dd, HH':'mm");
+                SetProperty(ref createdDate, value);
+                if (value == DateTime.MinValue)
+                {
+                    CreatedDate_String = "";
+                }
+                else
+                {
+                    CreatedDate_String = value.ToString("yyyy-MM-dd, HH':'mm");
+                }
             }
         }
 
@@ -147,7 +161,7 @@ namespace App1.ViewModels
             get => lastEdited;
             set
             {
-                SetProperty(ref dob, value);
+                SetProperty(ref lastEdited, value);
                 if (value == DateTime.MinValue)
                 {
                     LastEdited_String = "";
@@ -168,8 +182,16 @@ namespace App1.ViewModels
             get => lastContacted;
             set
             {
-                SetProperty(ref dob, value);
-                LastContacted_String = value.ToString("yyyy-MM-dd, HH':'mm");
+                SetProperty(ref lastContacted, value);
+                if (value == DateTime.MinValue)
+                {
+                    LastContacted_String = "";
+                }
+                else
+                {
+                    LastContacted_String = value.ToString("yyyy-MM-dd, HH':'mm");
+                }
+
             }
         }
 

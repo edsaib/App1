@@ -379,7 +379,7 @@ namespace App1.ViewModels
                 PhoneNumbers = contact.PhoneNumbers;
                 DoB = contact.DoB;
                 CreatedDate = contact.CreatedDate;
-                LastEdited = contact.LastEdited;
+                //LastEdited = contact.LastEdited;
                 LastContacted = contact.LastContacted;
                 Description = contact.Description;
                 ContactImgSource_String = contact.ContactImageSource_String;
@@ -532,6 +532,7 @@ namespace App1.ViewModels
             if (contactId != -1)
             {
                 newContact.Id = contactId;
+                newContact.LastEdited = DateTime.Now;
                 await _ContactDatabase.UpdateContactAsync(newContact);
             }
             else

@@ -172,6 +172,8 @@ namespace App1.ViewModels
             try
             {
                 PhoneDialer.Open(contact.PhoneNumbers);
+                contact.LastContacted = DateTime.Now;
+                await _ContactDatabase.UpdateContactAsync(contact);
             }
             catch (ArgumentNullException anEx)
             {
