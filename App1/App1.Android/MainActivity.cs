@@ -29,6 +29,7 @@ namespace App1.Droid
             global::Xamarin.FormsMaps.Init(this, savedInstanceState);      // Init Maps on Android (ref API key in AndroidManifest) 
             LoadApplication(new App());
         }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

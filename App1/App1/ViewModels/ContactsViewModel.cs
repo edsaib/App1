@@ -284,17 +284,17 @@ namespace App1.ViewModels
                 city = contact.City;
             }
 
-            if(!String.IsNullOrEmpty(contact.Country))
+            if (!String.IsNullOrEmpty(contact.Country))
             {
                 country = contact.Country;
             }
 
-            if(String.IsNullOrEmpty(contact.Street))
+            if (!String.IsNullOrEmpty(contact.Street))
             {
                 street = contact.Street;
             }
 
-            if(!String.IsNullOrEmpty(contact.PostalCode))
+            if (!String.IsNullOrEmpty(contact.PostalCode))
             {
                 postalCode = contact.PostalCode;
             }
@@ -307,10 +307,10 @@ namespace App1.ViewModels
             string uri = gui_uri +  "format=geojson";
 
             // NullReferenceException!!!! check whether attributes are null or not.
-            string searchQ = contact.Country + "+"
-                + contact.PostalCode + "+"
-                + contact.City + "+"
-                + contact.Street.Replace(' ', '+');
+            string searchQ = country + "+"
+                + postalCode + "+"
+                + city + "+"
+                + street.Replace(' ', '+');
 
 
             var result = await GetAddressDataAsync(uri);
@@ -350,17 +350,39 @@ namespace App1.ViewModels
                     //await Launcher.OpenAsync("geo:0,0?q="+searchQ);
                     //await Shell.Current.GoToAsync($"{nameof(MapPage)}");
 
-                    List<MapDetails> details = new List<MapDetails>
+                    Xamarin.Forms.Maps.Position addressPosition;
+                    List<MapDetails> details;
+
+                    if (result.Features.Length == 0)
                     {
-                        new MapDetails
+                        addressPosition = new Xamarin.Forms.Maps.Position(49.888180, 8.623688);
+
+                        details = new List<MapDetails>
                         {
+                        new MapDetails
+                            {
+                            PinName = "Betterbits",
+                            PinAddress = "Bunsenstraße 22",
+                            PinLabel = "Betterbits",
+                            Position = addressPosition
+                            }
+                        };
+                    } 
+                    else 
+                    {
+                        addressPosition = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0]);
+
+                        details = new List<MapDetails>
+                        {
+                        new MapDetails
+                            {
                             PinName = "Name",
                             PinAddress = contact.Street,
                             PinLabel = contact.FullName,
-                            Position = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0])
-                        
-                        }
-                    };
+                            Position = addressPosition
+                            }
+                        };
+                    }
 
                     var mapPage = new MapPage(details);
 
