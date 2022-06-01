@@ -386,6 +386,8 @@ namespace App1.ViewModels
 
                     var mapPage = new MapPage(details);
 
+                    //DependencyService.Get<IOrientationHandler>().ForcePortrait();
+
                     await Navigation.PushAsync(mapPage);
                 }
                 else if (Device.RuntimePlatform == Device.UWP)

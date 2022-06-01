@@ -1,6 +1,7 @@
 ﻿
 using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
@@ -19,10 +20,12 @@ namespace App1.Droid
             Manifest.Permission.AccessFineLocation
         };
         */
+        public static Context context;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            context = this;
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

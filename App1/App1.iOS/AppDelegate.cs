@@ -1,6 +1,10 @@
 ﻿
+using App1.Views;
 using Foundation;
+using ObjCRuntime;
+using System.Linq;
 using UIKit;
+using Xamarin.Forms;
 
 namespace App1.iOS
 {
@@ -24,6 +28,26 @@ namespace App1.iOS
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+
+        public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations(UIApplication application, [Transient] UIWindow forWindow)
+        {
+            if (Xamarin.Forms.Application.Current == null || Xamarin.Forms.Application.Current.MainPage == null)
+            {
+                return UIInterfaceOrientationMask.All;
+            }
+
+            var mainPage = Xamarin.Forms.Application.Current.MainPage;
+
+            if (mainPage is MapPage ||
+                    (mainPage is NavigationPage && ((NavigationPage)mainPage).CurrentPage is MapPage) ||
+                    (mainPage.Navigation != null && mainPage.Navigation.ModalStack.LastOrDefault() is MapPage))
+            {
+                return UIInterfaceOrientationMask.Landscape;
+            }
+
+            return UIInterfaceOrientationMask.All;
         }
     }
 }

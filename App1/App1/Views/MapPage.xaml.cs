@@ -43,5 +43,17 @@ namespace App1.Views
             Content = customMap;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            DependencyService.Get<IOrientationHandler>().ForcePortrait();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            DependencyService.Get<IOrientationHandler>().EnableOrientation();
+        }
+
     }
 }
