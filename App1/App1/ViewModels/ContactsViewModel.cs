@@ -279,6 +279,8 @@ namespace App1.ViewModels
             string country = "";
             string street = "";
             string postalCode = "";
+
+            // NullReferenceException!!!! check whether attributes are null or not.
             if (!String.IsNullOrEmpty(contact.City))
             {
                 city = contact.City;
@@ -306,7 +308,7 @@ namespace App1.ViewModels
             gui_uri += "country=" + country + "&";
             string uri = gui_uri +  "format=geojson";
 
-            // NullReferenceException!!!! check whether attributes are null or not.
+
             string searchQ = country + "+"
                 + postalCode + "+"
                 + city + "+"
@@ -323,21 +325,51 @@ namespace App1.ViewModels
             {
                 Debug.WriteLine(result);
 
+                List<MapDetails> details = new List<MapDetails> { };
+
+                // for loop to register all address details of Contact to show in CustomMap
+                MapDetails detail;
+                Xamarin.Forms.Maps.Position addressPosition;
+
+                if (result.Features.Length == 0)
+                {
+                    await App.Current.MainPage.DisplayAlert("Alert", "There is no valid address for this Contact!", "OK");
+                    return;
+                    
+                    /*
+                    addressPosition = new Xamarin.Forms.Maps.Position(49.888180, 8.623688);
+
+
+                    detail = new MapDetails
+                    {
+                        PinName = "Betterbits",
+                        PinAddress = "Bunsenstraße 22",
+                        PinLabel = "Betterbits",
+                        Position = addressPosition
+                    };
+                    */
+                }
+                else
+                {
+                    addressPosition = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0]);
+
+
+                    detail = new MapDetails
+                    {
+                        PinName = "Name",
+                        PinAddress = contact.Street,
+                        PinLabel = contact.FullName,
+                        Position = addressPosition
+                    };
+                }
+
+                details.Add(detail);
+
+
                 if (Device.RuntimePlatform == Device.iOS)
                 {
                     // https://developer.apple.com/library/ios/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
                     //await Launcher.OpenAsync("http://maps.apple.com/?q="+searchQ);
-
-                    List<MapDetails> details = new List<MapDetails>
-                    {
-                        new MapDetails
-                        {
-                            PinName = "Name",
-                            PinAddress = contact.Street,
-                            PinLabel = contact.FullName,
-                            Position = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0])
-                        }
-                    };
 
                     var mapPage = new MapPage(details);
 
@@ -350,43 +382,7 @@ namespace App1.ViewModels
                     //await Launcher.OpenAsync("geo:0,0?q="+searchQ);
                     //await Shell.Current.GoToAsync($"{nameof(MapPage)}");
 
-                    Xamarin.Forms.Maps.Position addressPosition;
-                    List<MapDetails> details;
-
-                    if (result.Features.Length == 0)
-                    {
-                        addressPosition = new Xamarin.Forms.Maps.Position(49.888180, 8.623688);
-
-                        details = new List<MapDetails>
-                        {
-                        new MapDetails
-                            {
-                            PinName = "Betterbits",
-                            PinAddress = "Bunsenstraße 22",
-                            PinLabel = "Betterbits",
-                            Position = addressPosition
-                            }
-                        };
-                    } 
-                    else 
-                    {
-                        addressPosition = new Xamarin.Forms.Maps.Position(result.Features[0].Geometry.Coordinates[1], result.Features[0].Geometry.Coordinates[0]);
-
-                        details = new List<MapDetails>
-                        {
-                        new MapDetails
-                            {
-                            PinName = "Name",
-                            PinAddress = contact.Street,
-                            PinLabel = contact.FullName,
-                            Position = addressPosition
-                            }
-                        };
-                    }
-
                     var mapPage = new MapPage(details);
-
-                    //DependencyService.Get<IOrientationHandler>().ForcePortrait();
 
                     await Navigation.PushAsync(mapPage);
                 }
