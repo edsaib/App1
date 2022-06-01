@@ -46,7 +46,7 @@ namespace App1.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            DependencyService.Get<IOrientationHandler>().ForcePortrait();
+            DependencyService.Get<IOrientationHandler>().ForceLandscape();
         }
 
         protected override void OnDisappearing()
