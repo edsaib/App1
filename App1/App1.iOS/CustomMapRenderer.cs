@@ -11,24 +11,31 @@ using Xamarin.Forms.Maps.iOS;
 using Xamarin.Forms.Platform.iOS;
 using App1.Services;
 
+// assembly: Attribute applies to the entire assembly
+// Export renderer for CustomMap instance
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
-
 namespace App1.iOS
 {
+    /// <summary>
+    /// CustomMapRenderer for iOS devices
+    /// </summary>
     class CustomMapRenderer : MapRenderer
     {
-
+        // Pin view shown on the map
         UIView customPinView;
+        // Holds information for custom markers
         List<CustomPin> customPins;
 
         /// <summary>
-        /// 
+        /// The MapRenderer class exposes the OnElementChanged method, which is called when the Xamarin.Forms custom map is created to render the corresponding native control.
+        /// This method registers properties and event handlers for this CustomMapRenderer.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnElementChanged(ElementChangedEventArgs<View> e)
         {
             base.OnElementChanged(e);
 
+            // Xamarin Forms element the renderer was attached to
             if (e.OldElement != null)
             {
                 var nativeMap = Control as MKMapView;
@@ -38,6 +45,7 @@ namespace App1.iOS
                 nativeMap.DidDeselectAnnotationView -= OnDidDeselectAnnotationView;
             }
 
+            // Xamarin Forms element the renderer is attached to
             if (e.NewElement != null)
             {
                 var formsMap = (CustomMap)e.NewElement;
@@ -71,6 +79,7 @@ namespace App1.iOS
                 throw new Exception("Custom pin not found");
             }
 
+            // build annotationView
             annotationView = mapView.DequeueReusableAnnotation(customPin.Name);
             if (annotationView == null)
             {
@@ -102,7 +111,8 @@ namespace App1.iOS
         }
 
         /// <summary>
-        /// When the user taps on the annotation, the DidSelectAnnotationView event fires, which in turn executes the OnDidSelectAnnotationView method
+        /// When the user taps on the annotation, the DidSelectAnnotationView event fires, which in turn executes the OnDidSelectAnnotationView method.
+        /// Constructs the customPinView instance.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -124,6 +134,7 @@ namespace App1.iOS
 
         /// <summary>
         /// When the annotation is displayed and the user taps on the map, the DidDeselectAnnotationView event fires, which in turn executes the OnDidDeselectAnnotationView method
+        /// Deconstructs the customPinView instance.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

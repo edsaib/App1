@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 
+// Register this class as a DependencyService (Android)
+// assembly: Attribute applies to the entire assembly
 [assembly: Dependency(typeof(OrientationHandler))]
 namespace App1.Droid
 {

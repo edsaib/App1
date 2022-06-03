@@ -38,17 +38,26 @@ namespace App1.Views
 
             //customMap.CustomPins = new List<CustomPin> { pin };
             //customMap.Pins.Add(pin);
+            // Move map view to region of given position
             customMap.MoveToRegion(MapSpan.FromCenterAndRadius(details[0].Position, Distance.FromMiles(1.0)));
 
+            // Xamarin Forms customMap instance is rendered with device specific CustomMapRenderer.
+            // Set the content of this page to the Xamarin Forms customMap element.
             Content = customMap;
         }
 
+        /// <summary>
+        /// When this page is available, force Landscape mode on phone
+        /// </summary>
         protected override void OnAppearing()
         {
             base.OnAppearing();
             DependencyService.Get<IOrientationHandler>().ForceLandscape();
         }
 
+        /// <summary>
+        /// When this page is disappearing from the navigation stack, enable orientation change of phone again.
+        /// </summary>
         protected override void OnDisappearing()
         {
             base.OnDisappearing();

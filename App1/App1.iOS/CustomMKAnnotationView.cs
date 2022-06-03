@@ -8,6 +8,9 @@ using MapKit;
 
 namespace App1.iOS
 {
+	/// <summary>
+	/// Marker view for iOS devices
+	/// </summary>
     class CustomMKAnnotationView : MKAnnotationView
     {
 		public string Name { get; set; }

@@ -11,11 +11,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
 
+// assembly: Attribute applies to the entire assembly
+// Export renderer when a CustomMap instance is created
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace App1.Droid
 {
     /// <summary>
-    /// CustomMapRenderer for Android devices with CustomPin information
+    /// CustomMapRenderer for Android devices
     /// </summary>
     public class CustomMapRenderer : MapRenderer, GoogleMap.IInfoWindowAdapter
     {
@@ -26,18 +28,21 @@ namespace App1.Droid
         }
 
         /// <summary>
-        /// 
+        /// The MapRenderer class exposes the OnElementChanged method, which is called when the Xamarin.Forms custom map is created to render the corresponding native control.
+        /// This method retrieves the list of custom pins.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
 
+            // Xamarin Forms element the renderer was attached to
             if (e.OldElement != null)
             {
                 NativeMap.InfoWindowClick -= OnInfoWindowClick;
             }
 
+            // Xamarin Forms element the renderer is attached to
             if (e.NewElement != null)
             {
                 var formsMap = (CustomMap)e.NewElement;
@@ -46,7 +51,9 @@ namespace App1.Droid
         }
 
         /// <summary>
-        /// Prepare map when the native map App has been loaded
+        /// This method will be invoked once the native map instance is available.
+        /// This method registers Event handlers (OnInfoWindowClick) for the custom markers on the map,
+        /// and calls the SetInfoWindowAdapter method, which registers the CustomMapRenderer (this).
         /// </summary>
         /// <param name="map"></param>
         protected override void OnMapReady(GoogleMap map)
@@ -58,10 +65,10 @@ namespace App1.Droid
         }
 
         /// <summary>
-        /// Create a new Marker on the native map App with given pin-information
+        /// Costumize the marker with the given Pin information
         /// </summary>
         /// <param name="pin"></param>
-        /// <returns></returns>
+        /// <returns>Customized Marker object</returns>
         protected override MarkerOptions CreateMarker(Pin pin)
         {
             var marker = new MarkerOptions();
@@ -73,7 +80,7 @@ namespace App1.Droid
         }
 
         /// <summary>
-        /// Event handler when the InfoWindow on a given Marker is clicked
+        /// When the user clicks on the info window, the InfoWindowClick event fires, which in turn executes the OnInfoWindowClick method.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -95,7 +102,11 @@ namespace App1.Droid
             }
         }
 
-
+        /// <summary>
+        /// When a user taps on the marker, the GetInfoContents method is executed, provided that the GetInfoWindow method returns null.
+        /// </summary>
+        /// <param name="marker"></param>
+        /// <returns></returns>
         public Android.Views.View GetInfoContents(Marker marker)
         {
             var inflater = Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService) as Android.Views.LayoutInflater;
@@ -109,6 +120,7 @@ namespace App1.Droid
                     throw new Exception("Custom pin not found");
                 }
 
+                // Show specific Layouts for specific pins
                 if (customPin.Name.Equals("Xamarin"))
                 {
                     view = inflater.Inflate(Resource.Layout.XamarinMapInfoWindow, null);
@@ -135,7 +147,13 @@ namespace App1.Droid
             return null;
         }
 
-
+        /// <summary>
+        /// This method is called to return a custom info window for a given marker. 
+        /// If it returns null, then the default window rendering will be used. 
+        /// If it returns a View, then that View will be placed inside the info window frame.
+        /// </summary>
+        /// <param name="marker"></param>
+        /// <returns>Returns null, thus the default window rendering will be used</returns>
         public Android.Views.View GetInfoWindow(Marker marker)
         {
             return null;

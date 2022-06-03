@@ -4,6 +4,9 @@ using System.Text;
 
 namespace App1.Services
 {
+    /// <summary>
+    /// Interface to control the orientation on devices
+    /// </summary>
     public interface IOrientationHandler
     {
         void ForceLandscape();

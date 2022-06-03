@@ -311,6 +311,7 @@ namespace App1.ViewModels
                 postalCode = contact.PostalCode;
             }
 
+            // Nominatim API request string
             string gui_uri = "https://nominatim.openstreetmap.org/search?";
             gui_uri += "city=" + city + "&";
             gui_uri += "postalcode=" + postalCode + "&";
@@ -318,7 +319,7 @@ namespace App1.ViewModels
             gui_uri += "country=" + country + "&";
             string uri = gui_uri +  "format=geojson";
 
-            // API request string
+            // General search queue string for APIs
             string searchQ = country + "+"
                 + postalCode + "+"
                 + city + "+"
