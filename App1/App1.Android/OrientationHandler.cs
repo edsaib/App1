@@ -16,6 +16,9 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(OrientationHandler))]
 namespace App1.Droid
 {
+    /// <summary>
+    /// Using the IOrientationHandler Interface to control the orientation on Android devices
+    /// </summary>
     class OrientationHandler : BaseDependencyImplementation, IOrientationHandler
     {
         public void EnableOrientation()

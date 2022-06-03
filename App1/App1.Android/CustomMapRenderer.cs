@@ -14,7 +14,9 @@ using Xamarin.Forms.Maps.Android;
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace App1.Droid
 {
-
+    /// <summary>
+    /// CustomMapRenderer for Android devices with CustomPin information
+    /// </summary>
     public class CustomMapRenderer : MapRenderer, GoogleMap.IInfoWindowAdapter
     {
         List<CustomPin> customPins;
@@ -23,6 +25,10 @@ namespace App1.Droid
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -39,7 +45,10 @@ namespace App1.Droid
             }
         }
 
-
+        /// <summary>
+        /// Prepare map when the native map App has been loaded
+        /// </summary>
+        /// <param name="map"></param>
         protected override void OnMapReady(GoogleMap map)
         {
             base.OnMapReady(map);
@@ -48,7 +57,11 @@ namespace App1.Droid
             NativeMap.SetInfoWindowAdapter(this);
         }
 
-
+        /// <summary>
+        /// Create a new Marker on the native map App with given pin-information
+        /// </summary>
+        /// <param name="pin"></param>
+        /// <returns></returns>
         protected override MarkerOptions CreateMarker(Pin pin)
         {
             var marker = new MarkerOptions();
@@ -59,6 +72,12 @@ namespace App1.Droid
             return marker;
         }
 
+        /// <summary>
+        /// Event handler when the InfoWindow on a given Marker is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="Exception"></exception>
         void OnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
         {
             var customPin = GetCustomPin(e.Marker);

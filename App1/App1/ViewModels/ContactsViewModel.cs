@@ -159,9 +159,9 @@ namespace App1.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// Asynchronous method to open the native call-App with the given Contact PhoneNumber
         /// </summary>
-        /// <param name="contact"></param>
+        /// <param name="contact">Contact object to get the PhoneNumber from</param>
         private async void OnCallContactSelected(Models.Contact contact)
         {
             if (contact.PhoneNumbers == null)
@@ -192,13 +192,10 @@ namespace App1.ViewModels
             }
         }
 
-        /*
-        async void PerformSearch(string searchText)
-        {
- 
-        }
-        */
-
+        /// <summary>
+        /// Asynchronous method to open the native Mail-App with the given Contact Emails
+        /// </summary>
+        /// <param name="contact">Contact object to get the Emails from</param>
         private async void OnMailContactSelected(Models.Contact contact)
         {
             if (contact.Emails == null)
@@ -230,6 +227,10 @@ namespace App1.ViewModels
             }
         }
 
+        /// <summary>
+        /// Asynchronous method to open the native SMS-App with the given Contact PhoneNumber
+        /// </summary>
+        /// <param name="contact">Contact object to get the PhoneNumber from</param>
         private async void OnSMSContactSelected(Models.Contact contact)
         {
             if (contact.PhoneNumbers == null)
@@ -254,6 +255,11 @@ namespace App1.ViewModels
             }
         }
         
+        /// <summary>
+        /// Sends an Http-GET request to a given API (string_uri) which is designed to return Geo information
+        /// </summary>
+        /// <param name="string_uri">API request in string format</param>
+        /// <returns>Returns a NominatimGeoJson object, containing geo data in json format</returns>
         public async Task<Models.NominatimGeoJson> GetAddressDataAsync(string string_uri)
         {
             
@@ -271,12 +277,14 @@ namespace App1.ViewModels
          
         }
         
-
+        /// <summary>
+        /// Asynchronous method to view the address-information of a given Contact on the native map-App
+        /// </summary>
+        /// <param name="contact">Contact object to get the address information from</param>
         private async void OnMapSelected(Models.Contact contact)
         {
 
-            // API call to get coordinates from specific address
-
+            // Build API request to get coordinates from specific address
             string city = "";
             string country = "";
             string street = "";
@@ -310,7 +318,7 @@ namespace App1.ViewModels
             gui_uri += "country=" + country + "&";
             string uri = gui_uri +  "format=geojson";
 
-
+            // API request string
             string searchQ = country + "+"
                 + postalCode + "+"
                 + city + "+"
@@ -319,6 +327,7 @@ namespace App1.ViewModels
 
             var result = await GetAddressDataAsync(uri);
 
+            // No result for this address (Nothing could be returned)
             if(result == null)
             {
                 await App.Current.MainPage.DisplayAlert("Alert", "There is no valid address for this Contact!", "OK");
@@ -333,6 +342,7 @@ namespace App1.ViewModels
                 MapDetails detail;
                 Xamarin.Forms.Maps.Position addressPosition;
 
+                // Coordinates information is an object within the Features object. If the length of Features == 0, there are no coordinates for this given address.
                 if (result.Features.Length == 0)
                 {
                     await App.Current.MainPage.DisplayAlert("Alert", "There is no valid address for this Contact!", "OK");
@@ -373,6 +383,7 @@ namespace App1.ViewModels
                     // https://developer.apple.com/library/ios/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
                     //await Launcher.OpenAsync("http://maps.apple.com/?q="+searchQ);
 
+                    // call native map app on phone
                     var mapPage = new MapPage(details);
 
                     await Navigation.PushAsync(mapPage);
@@ -384,6 +395,7 @@ namespace App1.ViewModels
                     //await Launcher.OpenAsync("geo:0,0?q="+searchQ);
                     //await Shell.Current.GoToAsync($"{nameof(MapPage)}");
 
+                    // call native map app on phone
                     var mapPage = new MapPage(details);
 
                     await Navigation.PushAsync(mapPage);
